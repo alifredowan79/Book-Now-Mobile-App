@@ -1,0 +1,1738 @@
+﻿;; SCRIPT CREATED BY ALAN FINOTTY
+;; Preprocessor Section
+#define AppName "AAF DCH Optimus Audio"
+#define AppID "{F132AF7F-7BCA-4EDE-8A7C-958108FE7DBD}"
+#define CTAppName "Sound Blaster Connect"
+#define AppVersion "10.0.2023.1"
+#define AppPublisher "AAF Optimus"
+#define SupportURL "https://www.techpowerup.com/forums/members/170292"
+#define HelpURL "https://www.techpowerup.com/forums/threads/250915"
+#define AppCopyright "Copyright © 2023 AAF Optimus"
+#define AAFStyleSkinFilepath "{sd}\ProgramData\AAFStyle"
+#define AAFBlackSkinFilename "CobaltXEMedia.vsf"
+
+;; File Directories
+#define UninstallDir "{commonpf64}\AAF\Uninstall"
+//#define DefaultDir "{tmp}\Optimus"
+#define DefaultDir "{sd}\ProgramData\Optimus"
+#define ScriptDir "{sd}\ProgramData\istvans"
+#define UWPAppsDir "{sd}\ProgramData\Optimus\Apps"
+#define DesktopAppsDir "{sd}\ProgramData\AAF\DesktopApps"
+#define UWPDependenciesDir "{sd}\ProgramData\Optimus\Dependencies"
+#define KGADir "{sd}\ProgramData\Optimus\KGA"
+#define ASIO64Dir "{win}\System32"
+#define IconDir "{win}\System32"
+#define ASIOWow64Dir "{syswow64}"
+#define TweakDir "{commonpf64}\AAFTweak"
+#define BusDriverDir "{sd}\ProgramData\Optimus\BusDriver"
+#define DriverDir "{sd}\ProgramData\Optimus\Driver"
+#define ExtensionsDir DriverDir + "\Extensions"
+#define ResourcesDir DriverDir + "\SWComponents"
+#define VADDir DriverDir + "\VAD"
+
+#define PSCommand "-ExecutionPolicy Bypass -Command"
+
+;; Setup Config Section
+[Setup]
+UsePreviousLanguage=no
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
+AppId={{#AppID}
+AppName={#AppName}
+AppVerName={#AppName}
+AppPublisher={#AppPublisher}
+AppPublisherURL={#HelpURL}
+AppSupportURL={#SupportURL}
+DefaultDirName={#DefaultDir}
+DisableDirPage=yes
+DisableProgramGroupPage=yes
+DisableFinishedPage=yes
+DisableWelcomePage=no
+DisableReadyPage=no
+OutputDir=D:\DCH
+OutputBaseFilename=Setup
+SetupIconFile=D:\DCH\Driver64\OEMIcon.ico
+Uninstallable=yes
+UninstallDisplayName={#AppName}
+UninstallFilesDir={#UninstallDir}
+UninstallDisplayIcon={win}\System32\OEMIcon.ico
+UninstallRestartComputer=yes
+Compression=lzma2/ultra64
+InternalCompressLevel=ultra64
+SolidCompression=no
+SignedUninstaller=yes
+SignTool=signtool
+SignToolRetryCount=15
+SignToolRunMinimized=no
+VersionInfoCopyright={#AppCopyright}
+VersionInfoCompany={#AppPublisher}
+VersionInfoVersion={#AppVersion}
+VersionInfoDescription={#AppName}
+VersionInfoOriginalFileName=AAFSetup.exe
+VersionInfoProductName={#AppName}
+VersionInfoProductTextVersion={#AppVersion}
+VersionInfoTextVersion={#AppVersion}
+VersionInfoProductVersion={#AppVersion}
+MinVersion=10.0.16299
+RestartApplications=False
+DirExistsWarning=no
+PrivilegesRequired=admin
+AlwaysRestart=no
+RestartIfNeededByRun=no
+DisableStartupPrompt=True
+DisableReadyMemo=True
+AppCopyright={#AppCopyright}
+UserInfoPage=False
+AppComments=Driver Modified by {#AppPublisher}
+AllowCancelDuringInstall=True
+AllowNoIcons=True
+AllowRootDirectory=True
+UpdateUninstallLogAppName=True
+DEPCompatible=yes
+DefaultDialogFontName=Segoe UI
+SetupLogging=yes
+ShowTasksTreeLines=yes
+WizardStyle=modern
+WizardImageFile=D:\My Logos\MyWizardBlackImage_DCH.bmp
+WizardSmallImageFile=D:\My Logos\MyWizardSmallBlackImage_DCH.bmp
+WizardImageStretch=no
+WizardImageAlphaFormat=premultiplied
+WizardSizePercent=150,125
+WizardResizable=yes
+WindowStartMaximized=yes
+WindowShowCaption=False
+WindowResizable=True
+WindowVisible=False
+BackSolid=True
+
+;; Languages Section
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+
+;; Language Options Section
+[LangOptions]
+LanguageName=English
+LanguageID=$0409
+DialogFontName=Segoe UI
+DialogFontSize=10
+WelcomeFontName=Segoe UI
+WelcomeFontSize=18
+TitleFontName=Segoe UI
+TitleFontSize=32
+CopyrightFontName=Segoe UI
+CopyrightFontSize=13
+
+;; Messages Section
+[Messages]
+SetupAppTitle={#AppName}
+SetupWindowTitle=Setup - {#AppName}
+ButtonCancel=&Exit
+ButtonBack=← &Previous
+ButtonNext=&Next →
+ButtonInstall=&Install ↓
+ClickNext=Click Next to continue, or Cancel to exit Setup.
+ExitSetupMessage=Installation has not yet been completed.%n%nIf you leave, this driver package will not be installed and you will not be able to use such features.%n%nAre you sure you want to exit this installation wizard?
+AboutSetupMenuItem=&About This Installer Wizard...
+AboutSetupTitle=About This Installer Wizard
+FinishedLabelNoIcons=Setup has finished installing {#AppName} on your computer.%n%nBut you need to restart your computer so you can enjoy all the features.
+FinishedLabel=Setup has finished installing {#AppName} on your computer.
+ClickFinish=But you need to restart your computer so you can enjoy all the features.
+SelectComponentsLabel2=Select Your Options
+WizardSelectComponents=Select Features
+SelectComponentsDesc=Select here which features will be installed.
+SelectComponentsLabel2=
+FullInstallation=All Features
+CompactInstallation=Only Main Features
+CustomInstallation=Your Choice
+
+;; Dirs Section
+[Dirs]
+Name: "{#DefaultDir}"; Attribs: hidden; Flags: deleteafterinstall
+
+;; Source Files Section
+[Files]
+// Bus Driver
+Source: "D:\BusDriver64\*"; DestDir: "{#BusDriverDir}"; Flags: deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(0) 
+
+// Main Driver
+Source: "{src}\Driver64\*"; DestDir: "{#DriverDir}"; Flags: external deleteafterinstall ignoreversion recursesubdirs
+
+// Realtek Components
+Source: "{src}\Others\Apps\RealtekAudioControl.AppxBundle"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion
+
+// A-Volute Apps
+Source: "{src}\Others\Apps\Nahimic.AppxBundle"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(22); MinVersion: 10.0.16299
+Source: "{src}\Others\Apps\SonicStudio3.AppxBundle"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(23); MinVersion: 10.0.16299
+
+// Creative Sound Blaster Connect (Universal)
+Source: "{src}\Others\Apps\SoundBlasterConnect.AppxBundle"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion recursesubdirs; Check: ComponentPageValueVerify(10)
+
+// Creative Sound Blaster Connect 2 (Legacy)
+Source: "{src}\Others\Apps\CreativeSBConnect2Setup.exe"; DestDir: "{#DesktopAppsDir}"; Flags: external deleteafterinstall ignoreversion recursesubdirs; Check: ComponentPageValueVerify(11)
+
+// Dolby Atmos
+Source: "{src}\Others\Apps\DolbyAtmos.Appx"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(18); MinVersion: 10.0.16299
+
+// Dolby Atmos Speaker System
+Source: "{src}\Others\Apps\DolbyAtmosSpeakerSystem.Appx"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(19); MinVersion: 10.0.16299
+
+// Dolby Atmos Speaker System For Gaming
+Source: "{src}\Others\Apps\DolbyAtmosforGaming.Appx"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(20); MinVersion: 10.0.16299
+
+// DTS Studio Sound
+Source: "{src}\Others\Apps\DTSStudioSound.Appx"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(6)
+
+// DTS:X Ultra
+Source: "{src}\Others\Apps\DTSXUltra.AppxBundle"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(7)
+
+// DTS Sound Unbound
+Source: "{src}\Others\Apps\DTSSoundUnbound.msix"; DestDir: "{#UWPAppsDir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(8); MinVersion: 10.0.18362
+
+// UWP App Dependencies
+Source: "{src}\Others\Dependencies\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.VCLibs.140.00_14.0.30704.0_x86__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Framework.1.3_1.3.24211.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Framework.1.7_1.7.27413.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Runtime.1.7_1.7.27422.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Framework.1.7_1.7.27413.0_x86__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Runtime.1.7_1.7.27422.0_x86__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Framework.1.3_1.3.24211.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Runtime.1.4_1.4.24201.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Framework.2.1_2.1.27427.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Runtime.2.1_2.1.26424.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Framework.2.2_2.2.29512.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+Source: "{src}\Others\Dependencies\Microsoft.NET.Native.Runtime.2.2_2.2.28604.0_x64__8wekyb3d8bbwe.Appx"; DestDir: "{#UWPDependenciesDir}"; Flags: external deleteafterinstall ignoreversion
+
+// Creative KGA Generator
+Source: "{src}\Others\KGA\*"; DestDir: "{#KGADir}"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(13)
+Source: "{src}\Others\KGA\GenKGA.exe"; DestDir: "{#KGADir}"; DestName: "SBXLicense.exe"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(10)
+Source: "{src}\Others\KGA\GenKGA3.exe"; DestDir: "{#KGADir}"; DestName: "SBXLicense.exe"; Flags: external deleteafterinstall ignoreversion; Check: ComponentPageValueVerify(11) or ComponentPageValueVerify(12)
+
+// Realtek ASIO
+Source: "{src}\Others\ASIO\RTHDASIO.dll"; DestDir: "{#ASIOWow64Dir}"; Flags: external regserver; Check: ComponentPageValueVerify(24)
+Source: "{src}\Others\ASIO\RTASIOCP.dll"; DestDir: "{#ASIOWow64Dir}"; Flags: external; Check: ComponentPageValueVerify(24)
+Source: "{src}\Others\ASIO\RTHDASIO64.dll"; DestDir: "{#ASIO64Dir}"; Flags: external regserver; Check: ComponentPageValueVerify(24)
+Source: "{src}\Others\ASIO\RTASIOCP64.dll"; DestDir: "{#ASIO64Dir}"; Flags: external; Check: ComponentPageValueVerify(24)
+
+// Realtek Tweak App
+Source: "{src}\Others\Tweak\*"; DestDir: "{#TweakDir}"; Flags: external ignoreversion
+Source: "{src}\Others\Tweak\RT.pdb"; DestDir: "{#TweakDir}"; Flags: external ignoreversion; Attribs: hidden
+
+// PowerShell Script to Remove Ghost Devices - All project credit and my special thanks to István Siroki (@istvans)
+Source: "{src}\Others\Scripts\removeGhosts.ps1"; DestDir: "{#ScriptDir}"; Flags: external ignoreversion
+
+// Realtek Audio Configuration Policy File
+Source: "{src}\Config\rtkhdaud.dat"; DestDir: "{win}\System32\drivers"; Flags: external ignoreversion skipifsourcedoesntexist
+
+// Digital Certificates
+Source: "D:\XCACert2022\Cert\SST\AAFAuthRoot.sst"; Flags: dontcopy; Attribs: hidden
+Source: "D:\XCACert2022\Cert\DER\AAFCodeSigCA384.crt"; Flags: dontcopy; Attribs: hidden
+Source: "D:\XCACert2022\Cert\DER\AAFCodeSig384.crt"; Flags: dontcopy; Attribs: hidden
+Source: "D:\XCACert2022\Cert\DER\AAFDrvSgCA384.crt"; Flags: dontcopy; Attribs: hidden
+Source: "D:\XCACert2022\Cert\DER\AAFDrvSg384.crt"; Flags: dontcopy; Attribs: hidden
+Source: "D:\XCACert2022\Cert\DER\AAFStoreCA384.crt"; Flags: dontcopy; Attribs: hidden
+
+// Theme Library, Skin and Wizard Images
+Source: "D:\AAF Script\StyleDll\AAF.VStyles.dll"; DestDir: "{#AAFStyleSkinFilepath}"; Flags: ignoreversion
+Source: "D:\AAF Script\StyleFiles\{#AAFBlackSkinFilename}"; Flags: dontcopy
+Source: "D:\My Logos\MyWizardBlackImage_DCH.bmp"; Flags: dontcopy
+Source: "D:\My Logos\MyWizardSmallBlackImage_DCH.bmp"; Flags: dontcopy
+
+// SetACL Executable
+Source: "D:\SetACL.exe"; Flags: dontcopy
+
+// Script Code
+Source: "D:\AAF Script\RealtekUAD2Win10.~is"; DestDir: "{commondesktop}"; DestName: "Script - {#AppName} {#AppVersion}.txt"; Flags: ignoreversion
+
+;; Icons Section
+[Icons]
+Name: "{commondesktop}\AAF DCH Optimus Audio - Tweak Tool"; Filename: "{commonpf64}\AAFTweak\AudioDevice.exe"; IconFilename: "{win}\System32\OEMIcon.ico"; IconIndex: 0
+
+;; Uninstall Parameters Section
+[UninstallRun]
+Filename: "{commonpf32}\Creative\Sound Blaster Connect 2\Uninstall\unins000.exe"; Parameters: "/VERYSILENT /NORESTART /FORCECLOSEAPPLICATIONS"; Flags: runhidden waituntilterminated
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Stop-Process -Name audiodg -Force"; Flags: runhidden waituntilterminated
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Stop-Service -Name ""AudioEndpointBuilder"" -Force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_DTSApo3x.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_DTSApo4x.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_AVoluteApo4.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_RealtekAPO.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_RealtekAPO2.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_CreativeSBC2.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_CreativeSBC.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_CreativeSBX.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_AVoluteApo3.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_Atmos.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_AtmosSpeakerSystem.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_AtmosSpeakerSystemForGaming.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_DolbyDigital.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\HDXExt_DTSInteractive.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\NahimicBTLink.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{win}\System32\pnputil.exe"; Parameters: "/delete-driver ""{commonpf64}\AAF\Uninstall\INF\NahimicMirroring.inf"" /uninstall /force"; Flags: runhidden waituntilterminated
+Filename: "{cmd}"; Parameters: "/c reg delete HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture /f"; Flags: runhidden waituntilterminated
+Filename: "{cmd}"; Parameters: "/c reg delete HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render /f"; Flags: runhidden waituntilterminated
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Get-AppxPackage *DTSInc.DTS* | Remove-AppxPackage"; Flags: runhidden waituntilterminated
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Get-AppxPackage *RealtekSemiconductorCorp.RealtekAudioControl* | Remove-AppxPackage"; Flags: runhidden waituntilterminated
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Get-AppxPackage *CreativeTechnologyLtd.SoundBlasterConnect* | Remove-AppxPackage"; Flags: runhidden waituntilterminated
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Get-AppxPackage *A-Volute.Nahimic* | Remove-AppxPackage"; Flags: runhidden waituntilterminated; MinVersion: 10.0.16299
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Get-AppxPackage *A-Volute.SonicStudio* | Remove-AppxPackage"; Flags: runhidden waituntilterminated; MinVersion: 10.0.16299
+Filename: "powershell.exe"; Parameters: "{#PSCommand} Get-AppxPackage *DolbyLaboratories.DolbyAtmos* | Remove-AppxPackage"; Flags: runhidden waituntilterminated; MinVersion: 10.0.16299
+
+// PowerShell Script to Remove Ghost Devices - All project credit and my special thanks to István Siroki (@istvans)
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{#ScriptDir}\removeGhosts.ps1"" -narrowByClass ""MEDIA"" -filterByFriendlyName ""Microsoft"" -Force"; Flags: runhidden nowait
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{#ScriptDir}\removeGhosts.ps1"" -narrowByClass ""AudioEndpoint"" -Force"; Flags: runhidden nowait
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -File ""{#ScriptDir}\removeGhosts.ps1"" -narrowByClass ""SoftwareComponent"" -Force"; Flags: runhidden nowait
+
+;; Uninstall Delete Section
+[UninstallDelete]
+Type: filesandordirs; Name: "{#DefaultDir}\*"
+Type: dirifempty; Name: "{#DefaultDir}"
+Type: filesandordirs; Name: "{sd}\ProgramData\Creative\SoftwareLock\*"; Check: ComponentPageValueVerify(13)
+Type: files; Name: "{#AAFStyleSkinFilepath}\AAF.VStyles.dll"
+Type: files; Name: "{#AAFStyleSkinFilepath}\Uninst.vsf"
+Type: filesandordirs; Name: "{#AAFStyleSkinFilepath}\*"
+Type: filesandordirs; Name: "{commonpf64}\AAF\Uninstall\INF\*"
+Type: dirifempty; Name: "{commonpf64}\AAF\Uninstall\INF"
+Type: dirifempty; Name: "{#UninstallDir}"
+Type: files; Name: "{commonpf64}\AAF\Uninstall\AAFUpdAPITool64.exe"
+Type: files; Name: "{#ASIO64Dir}\RTHDASIO64.dll"; Check: ComponentPageValueVerify(24)
+Type: files; Name: "{#ASIO64Dir}\RTASIOCP64.dll"; Check: ComponentPageValueVerify(24)
+Type: files; Name: "{#ASIOWow64Dir}\RTHDASIO.dll"; Check: ComponentPageValueVerify(24)
+Type: files; Name: "{#ASIOWow64Dir}\RTASIOCP.dll"; Check: ComponentPageValueVerify(24)
+Type: filesandordirs; Name: "{#TweakDir}\*"
+Type: dirifempty; Name: "{#TweakDir}"
+
+;; Code Section - Pascal Script
+[Code]
+procedure LoadAAFStyle(AAFStyleFilename: String); 
+	external 'LoadVCLStyleW@files:AAF.VStyles.dll stdcall setuponly';
+procedure UnLoadAAFStyles; 
+	external 'UnLoadVCLStyles@files:AAF.VStyles.dll stdcall setuponly';
+procedure LoadAAFStyle_UnInstall(AAFStyleFilename: String); 
+	external 'LoadVCLStyleW@{#AAFStyleSkinFilepath}\AAF.VStyles.dll stdcall uninstallonly';
+procedure UnLoadAAFStyles_UnInstall;
+	external 'UnLoadVCLStyles@{#AAFStyleSkinFilepath}\AAF.VStyles.dll stdcall uninstallonly';
+procedure ExitProcess(uExitCode: Integer);
+  external 'ExitProcess@kernel32.dll stdcall';
+
+var
+	ResultCode, ErrorCode, W, I: Integer;
+	Form: TSetupForm;
+	AboutButton, TPUButton, DonateButton: TNewButton;
+	Version: TWindowsVersion;
+	StaticText, URLLabel, FilenameLabel, StatusLabel: TNewStaticText;
+	OKButton: TNewButton;
+	DriverVersion, USBDriverVersion: String;
+	InstalledDriverVersion, InstalledUSBDriverVersion: String;
+	WbemLocator, WbemServices: Variant;
+	MediaQuery: Variant;
+	UninstQuery, InstQuery: Variant;
+	ComponentPage: TInputOptionWizardPage;
+	
+const
+	MEDIA = 'SELECT * FROM Win32_PnPSignedDriver WHERE DeviceClass = "MEDIA"';
+	AAF = 'SELECT * FROM Win32_PnPSignedDriver WHERE Manufacturer = "AAF Optimus"';
+	
+procedure LoadBlackTheme;
+begin
+	ExtractTemporaryFile('{#AAFBlackSkinFilename}');
+	CreateDir(ExpandConstant('{#AAFStyleSkinFilepath}'));
+	FileCopy(ExpandConstant('{tmp}\{#AAFBlackSkinFilename}'), ExpandConstant('{#AAFStyleSkinFilepath}\Uninst.vsf'), FALSE);
+	LoadAAFStyle(ExpandConstant('{tmp}\{#AAFBlackSkinFilename}'));
+end;
+
+function ComponentPageValueVerify(N: Integer): Boolean;
+begin
+	with ComponentPage.CheckListBox do
+	begin
+		Result := Checked[N];
+	end;
+end;
+
+function InitializeSetup(): Boolean;
+begin
+	ExtractTemporaryFile('AAFAuthRoot.sst');
+	ExtractTemporaryFile('AAFCodeSigCA384.crt');
+	ExtractTemporaryFile('AAFDrvSgCA384.crt');
+	ExtractTemporaryFile('AAFStoreCA384.crt');
+	ExtractTemporaryFile('AAFCodeSig384.crt');
+	ExtractTemporaryFile('AAFDrvSg384.crt');
+	Exec(ExpandConstant('{win}\System32\certutil.exe'), ExpandConstant('-f -addstore "Root" "{tmp}\AAFAuthRoot.sst"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	Exec(ExpandConstant('{win}\System32\certutil.exe'), ExpandConstant('-f -addstore "CA" "{tmp}\AAFCodeSigCA384.crt"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	Exec(ExpandConstant('{win}\System32\certutil.exe'), ExpandConstant('-f -addstore "CA" "{tmp}\AAFDrvSgCA384.crt"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	Exec(ExpandConstant('{win}\System32\certutil.exe'), ExpandConstant('-f -addstore "CA" "{tmp}\AAFStoreCA384.crt"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	Exec(ExpandConstant('{win}\System32\certutil.exe'), ExpandConstant('-f -addstore "TrustedAppRoot" "{tmp}\AAFStoreCA384.crt"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	Exec(ExpandConstant('{win}\System32\certutil.exe'), ExpandConstant('-f -addstore "TrustedPublisher" "{tmp}\AAFCodeSig384.crt"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	Exec(ExpandConstant('{win}\System32\certutil.exe'), ExpandConstant('-f -addstore "TrustedPublisher" "{tmp}\AAFDrvSg384.crt"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	RegWriteDWordValue(HKLM, 'SYSTEM\CurrentControlSet\Control\CI\Policy', 'WhqlDeveloperTestMode', 1);
+	RegWriteDWordValue(HKLM, 'SYSTEM\CurrentControlSet\Control\CI\Policy', 'WhqlSettings', 1);
+	RegWriteDWordValue(HKLM, 'SYSTEM\CurrentControlSet\Control\DeviceGuard', 'RequireMicrosoftSignedBootChain', 0);
+	DelTree('{tmp}\*.sst', False, True, False);
+	DelTree('{tmp}\*.crt', False, True, False);
+	WbemLocator := CreateOleObject('WbemScripting.SWbemLocator');
+	WbemServices := WbemLocator.ConnectServer('.', 'root\CIMV2');
+	MediaQuery := WbemServices.ExecQuery(MEDIA);
+	InstQuery := WbemServices.ExecQuery(AAF);
+	Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/scan-devices', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	try
+	for I := 0 to MediaQuery.Count-1 do
+		if WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*FUNC_01&VEN_10EC*') and WildCardMatch(MediaQuery.ItemIndex(I).Manufacturer, 'AAF*') then
+		begin
+			Beep;
+			MsgBox('There is already an AAF Optimus product installed on your system.'#13#13 +
+			'It is necessary to uninstall it before proceeding with this wizard.'#13#13 +
+			'Identified device information:'#13 +
+			'Product Name: ' + MediaQuery.ItemIndex(I).DeviceName + #13 +
+			'Manufacturer: ' + MediaQuery.ItemIndex(I).Manufacturer + #13 +
+			'Product Version: ' + MediaQuery.ItemIndex(I).DriverVersion, MBCRITICALERROR, MB_OK);
+			//Exit;
+		end;
+	finally
+	for I := 0 to MediaQuery.Count-1 do
+		if WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*FUNC_01&VEN_10EC*') and WildCardMatch(MediaQuery.ItemIndex(I).Manufacturer, 'AAF*') then
+		begin
+			Exit;
+		end;
+	end;
+	//end else
+	Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/scan-devices', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	try
+	for I := 0 to MediaQuery.Count-1 do
+		if (WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*FUNC_01&VEN_10EC*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1915*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1916*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1917*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1918*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1919*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1984*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1996*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1998*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1999*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_19AC*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A20*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A27*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A52*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A53*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A5C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_9D09*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4008*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4015*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4016*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4802*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4803*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4021*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_480C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4825*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_482F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4833*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_7810*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_14A3*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4002*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4003*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4005*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4010*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4011*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4024*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4040*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_1570*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_1571*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_103C&PID_830A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4825*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4837*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4040*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_045E&PID_0929*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4008*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4016*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_402D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_402E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A002*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A010*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A011*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A012*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_F000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_0D64*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_543D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_8AF7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_80A5*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_5F5D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_6CC9*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A228*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1D34*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_E06C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A47C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_BB5A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_419C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_151F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A073*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1BCA*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_124B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_95BB*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_005A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1FEB*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_B202*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_4039*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_C197*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_88F8*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_6730*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_9F3F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_82C7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_7B3D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A7C2*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_3130*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_36E7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A16*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_4240*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A74B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_D6E7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A014*')) and
+		WildCardMatch(MediaQuery.ItemIndex(I).Manufacturer, 'Realtek*') then
+		begin
+			Beep;
+			MsgBox('There is already a Realtek driver package installed on your computer.'#13#13 +
+			'It is necessary to remove the main driver, in the case of an HDA (Legacy Audio Driver), or the main driver and all related adjacent ones (extensions, software components, etc.) in the case of a UAD (Universal Audio Driver)'#13#13 +
+			'Product Name: ' + MediaQuery.ItemIndex(I).DeviceName + #13 +
+			'Manufacturer: ' + MediaQuery.ItemIndex(I).Manufacturer + #13 +
+			'Product Version: ' + MediaQuery.ItemIndex(I).DriverVersion, MBCRITICALERROR, MB_OK);
+		end;
+	finally
+	for I := 0 to MediaQuery.Count-1 do
+		if (WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1915*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1916*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1917*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1918*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1919*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1984*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1996*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1998*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1999*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_19AC*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A20*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A27*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A52*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A53*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A5C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_9D09*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4008*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4015*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4016*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4802*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4803*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4021*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_480C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4825*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_482F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4833*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_7810*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_14A3*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4002*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4003*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4005*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4010*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4011*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4024*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4040*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_1570*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_1571*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_103C&PID_830A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4825*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4837*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4040*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_045E&PID_0929*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4008*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4016*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_402D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_402E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A002*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A010*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A011*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A012*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_F000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_0D64*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_543D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_8AF7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_80A5*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_5F5D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_6CC9*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A228*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1D34*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_E06C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A47C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_BB5A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_419C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_151F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A073*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1BCA*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_124B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_95BB*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_005A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1FEB*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_B202*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_4039*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_C197*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_88F8*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_6730*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_9F3F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_82C7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_7B3D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A7C2*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_3130*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_36E7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A16*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_4240*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A74B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_D6E7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A014*')) and
+		WildCardMatch(MediaQuery.ItemIndex(I).Manufacturer, 'Realtek*') then
+		begin
+			Exit;
+		end;
+	end;
+	Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/scan-devices', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	try
+	for I:=0 to MediaQuery.Count-1 do
+		if WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*FUNC_01&VEN_10EC*') then
+		begin
+			Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/remove-device "' + MediaQuery.ItemIndex(I).DeviceID + '" /subtree', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end;
+	finally
+	end;
+	Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/scan-devices', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	LoadBlackTheme;
+	Result := True;
+end;
+
+procedure URLLabelOnClick(Sender: TObject);
+begin
+  ShellExecAsOriginalUser('open', 'https://github.com/istvans', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+end;
+
+procedure AboutButtonOnClick(Sender: TObject);
+begin
+  Form := CreateCustomForm;
+  Form.ClientWidth := ScaleX(220);
+  //Form.ClientHeight := ScaleY(64);
+  Form.ClientHeight := ScaleY(118);
+  Form.Caption := '{#AppName}';
+		
+	StaticText := TNewStaticText.Create(Form);
+  StaticText.Top := ScaleY(10);
+  StaticText.Left := ScaleX(10);
+	StaticText.Anchors := [akLeft, akTop, akRight];
+	StaticText.Caption := '{#AppCopyright}'#13#13 + 'Thank you very much. I hope you enjoy the work.'#13#13 +
+	'This installation package includes the Ghost Devices Removal'#13 +
+	'Script. All credit to the aforementioned project and my special'#13 +
+	'thanks to: ';
+	StaticText.AutoSize := True;
+	StaticText.Parent := Form;
+	
+  URLLabel := TNewStaticText.Create(Form);
+  URLLabel.Caption := 'István Siroki (istvans)';
+  URLLabel.Cursor := crHand;
+  URLLabel.OnClick := @URLLabelOnClick;
+  URLLabel.Parent := Form;
+  URLLabel.Font.Style := URLLabel.Font.Style + [fsUnderline];
+  URLLabel.Font.Color := clGreen;
+  URLLabel.Top := StaticText.Top + ScaleY(78);
+  URLLabel.Left := StaticText.Left + ScaleX(53);
+  URLLabel.Anchors := [akLeft, akBottom];
+
+  Form.KeepSizeY := True;
+  Form.FlipSizeAndCenterIfNeeded(True, WizardForm, False);
+
+  Form.ShowModal;
+end;
+
+procedure TPUButtonOnClick(Sender: TObject);
+begin
+	case TaskDialogMsgBox('', '', mbConfirmation, MB_YESNOCANCEL, ['Support on my TechPowerUp Profile'#13 + 'You will be redirected to my profile page on TechPowerUp.', 'Support on TechPowerUp Thread'#13 + 'You will be redirected to support thread in TechPowerUp.'], IDYES) of
+    IDYES: ShellExecAsOriginalUser('open', '{#SupportURL}', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+		IDNO: ShellExecAsOriginalUser('open', '{#HelpURL}', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+  end;
+end;
+
+procedure DonateButtonOnClick(Sender: TObject);
+begin
+  Form := CreateCustomForm;
+  Form.ClientWidth := ScaleX(220);
+  Form.ClientHeight := ScaleY(130);
+  Form.Caption := '{#AppName}';
+		
+	StaticText := TNewStaticText.Create(Form);
+  StaticText.Top := ScaleY(10);
+  StaticText.Left := ScaleX(10);
+	StaticText.Anchors := [akLeft, akTop, akRight];
+	StaticText.Caption := 'Donation ways:'#13 + 'World: PayPal'#13#13 + 'Brazil:'#13 + 'PIX: alanfinoty@gmail.com'#13 + 'PIX: alanfinoty@live.com'#13#13 + 'Click OK to redirect to PayPal Donate Page';
+	StaticText.AutoSize := True;
+	StaticText.Parent := Form;
+
+  OKButton := TNewButton.Create(Form);
+  OKButton.Parent := Form;
+  OKButton.Caption := '❤ OK';
+  OKButton.Left := Form.ClientWidth - ScaleX(75 + 10);
+  OKButton.Top := Form.ClientHeight - ScaleY(23 + 10);
+  OKButton.Height := ScaleY(23);
+  OKButton.Anchors := [akRight, akBottom]
+  OKButton.ModalResult := mrOk;
+  OKButton.Default := True;
+		
+  W := Form.CalculateButtonWidth([OKButton.Caption]);
+  OKButton.Width := W;
+
+  Form.KeepSizeY := True;
+  Form.FlipSizeAndCenterIfNeeded(True, WizardForm, False);
+	if Form.ShowModal() = mrOk then
+		ShellExecAsOriginalUser('open', 'https://www.paypal.com/donate?hosted_button_id=6C6GG7DE5BCGS', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+end;
+
+procedure ButtonOnClick(Sender: TObject);
+begin
+  ShellExecAsOriginalUser('open', 'ms-settings:developers','', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+end;
+
+procedure CreateAboutButtonAndURLLabel(ParentForm: TSetupForm);
+begin
+	AboutButton := TNewButton.Create(ParentForm);
+	AboutButton.Left := ParentForm.ClientWidth - WizardForm.CancelButton.Left - WizardForm.CancelButton.Width;
+	AboutButton.Top := WizardForm.CancelButton.Top;
+	//AboutButton.Width := WizardForm.CancelButton.Width - ScaleX(23);
+	AboutButton.Width := WizardForm.CancelButton.Width - ScaleX(10);
+	AboutButton.Height := WizardForm.CancelButton.Height;
+	AboutButton.Anchors := [akLeft, akBottom];
+	AboutButton.Caption := 'About (New)';
+	AboutButton.OnClick := @AboutButtonOnClick;
+	AboutButton.Parent := ParentForm;
+	
+	TPUButton := TNewButton.Create(ParentForm);
+	TPUButton.Left := AboutButton.Left + 78; 
+	TPUButton.Top := AboutButton.Top;
+	TPUButton.Width := AboutButton.Width + ScaleX(65);
+	TPUButton.Height := AboutButton.Height;
+	TPUButton.Anchors := [akLeft, akBottom];
+	TPUButton.Caption := 'Support on TechPowerUp';
+	TPUButton.OnClick := @TPUButtonOnClick;
+	TPUButton.Parent := ParentForm;
+	
+	DonateButton := TNewButton.Create(ParentForm);
+	DonateButton.Left := TPUButton.Left + 154; 
+	DonateButton.Top := AboutButton.Top;
+	DonateButton.Width := AboutButton.Width + ScaleX(80);
+	DonateButton.Height := AboutButton.Height;
+	DonateButton.Anchors := [akLeft, akBottom];
+	DonateButton.Caption := '❤❤ Support Me with Donate';
+	DonateButton.OnClick := @DonateButtonOnClick;
+	DonateButton.Parent := ParentForm;
+end;
+
+procedure UpdateBusComponent;
+begin
+	with ComponentPage.CheckListBox do
+	begin
+		ShowLines:=False;
+		Flat:=True;
+		WantTabs:=True;
+		try
+		for I:=0 to InstQuery.Count-1 do
+			if Checked [0] and WildCardMatch(InstQuery.ItemIndex(I).DeviceName, 'AAF Optimus*') and WildCardMatch(InstQuery.ItemIndex(I).DriverVersion, '10.11.2023.1*') then
+			begin
+				CheckItem(0, coUncheck);
+				ItemEnabled[0]:=False;
+				Show;
+				Repaint;
+				Update;
+			end;
+		finally
+		end;
+	end;
+end;
+
+procedure UpdateComponents;
+begin
+	with ComponentPage.CheckListBox do
+	begin
+		ShowLines := False;
+		Flat := True;
+		WantTabs := True;
+		if Checked[6] then
+		begin
+			CheckItem(10, coUncheck);
+			ItemEnabled[10] := False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[10] := True;
+			Show;
+			Repaint;
+			Update;
+		if Checked[10] then
+		begin
+			CheckItem(6, coUncheck);
+			ItemEnabled[6] := False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[6] := True;
+			Show;
+			Repaint;
+			Update;
+		if not Checked[9] then
+		begin
+			CheckItem(13, coUncheck);
+			ItemEnabled[13] := False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[13] := True;
+			Show;
+			Repaint;
+			Update;
+		if not Checked[9] then
+		begin
+			CheckItem(14, coUncheck);
+			ItemEnabled[14] := False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[14] := True;
+			Show;
+			Repaint;
+			Update;
+		if not Checked[9] then
+		begin
+			CheckItem(15, coUncheck);
+			ItemEnabled[15] := False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[15] := True;
+			Show;
+			Repaint;
+			Update;
+		if not Checked[9] then
+		begin
+			CheckItem(16, coUncheck);
+			ItemEnabled[16] := False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[16] := True;
+			Show;
+			Repaint;
+			Update;
+		if not Checked[10] then
+		begin
+			CheckItem(16, coUncheck);
+			ItemEnabled[16] := False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[16] := True;
+			Show;
+			Repaint;
+			Update;
+		if Checked[12] then
+		begin
+			CheckItem(13, coUncheck);
+			ItemEnabled[13]:=False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[13]:=True;
+			Show;
+			Repaint;
+			Update;
+		if Checked[12] then
+		begin
+			CheckItem(14, coUncheck);
+			ItemEnabled[14]:=False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[14]:=True;
+			Show;
+			Repaint;
+			Update;
+		if Checked[12] then
+		begin
+			CheckItem(15, coUncheck);
+			ItemEnabled[15]:=False;
+			Hide;
+			Repaint;
+			Update;
+		end else
+			ItemEnabled[15]:=True;
+			Show;
+			Repaint;
+			Update;
+//		if not Checked[21] then
+//		begin
+//			CheckItem(24, coUncheck);
+//			ItemEnabled[24]:=False;
+//			Hide;
+//			Repaint;
+//			Update;
+//		end else
+//			ItemEnabled[24]:=True;
+//			Show;
+//			Repaint;
+//			Update;
+//		if not Checked[21] then
+//		begin
+//			CheckItem(25, coUncheck);
+//			ItemEnabled[25]:=False;
+//			Hide;
+//			Repaint;
+//			Update;
+//		end else
+//			ItemEnabled[25]:=True;
+//			Show;
+//			Repaint;
+//			Update;	
+	end;
+end;
+
+procedure ComponentsClickCheck(Sender: TObject);
+begin
+  UpdateComponents;
+end;
+
+procedure InitializeWizard;
+begin
+	MediaQuery := WbemServices.ExecQuery(MEDIA);
+	GetVersionNumbersString(ExpandConstant('{src}\Driver64\RTKVHD64.sys'), DriverVersion);
+	GetVersionNumbersString(ExpandConstant('{src}\Driver64\RtUsbA64.sys'), USBDriverVersion);
+	CreateAboutButtonAndURLLabel(WizardForm);
+	WizardForm.NextButton.Top := WizardForm.CancelButton.Top;
+	WizardForm.NextButton.Left := WizardForm.CancelButton.Left;
+	WizardForm.BackButton.Top := WizardForm.NextButton.Top;
+	WizardForm.BackButton.Left := WizardForm.NextButton.Left - ScaleX(85);
+	WizardForm.CancelButton.Hide;
+	WizardForm.CancelButton.Enabled := False;
+	WizardForm.CancelButton.Visible := False;
+	WizardForm.WelcomeLabel1.Caption := 'Welcome to the Installation Wizard for {#AppName}';
+	WizardForm.BeveledLabel.Caption := '{#AppCopyright} - HD Audio Driver Version: ' + DriverVersion + ' - USB Audio Driver Version: ' + USBDriverVersion;
+	
+	WizardForm.WizardSmallBitmapImage.Align := alRight;
+	WizardForm.WizardSmallBitmapImage.Width := 350;
+	
+	StatusLabel := TNewStaticText.Create(WizardForm);
+	StatusLabel.Parent := WizardForm.StatusLabel.Parent;
+	StatusLabel.Left := WizardForm.StatusLabel.Left;
+	StatusLabel.Top := WizardForm.FilenameLabel.Top;
+	StatusLabel.Width := WizardForm.StatusLabel.Width;
+	StatusLabel.Height := WizardForm.StatusLabel.Height;
+	StatusLabel.AutoSize := True;
+	WizardForm.StatusLabel.Visible := False;
+	StatusLabel.Caption := 'The selected features are being installed. Please wait...';
+	
+	FilenameLabel := TNewStaticText.Create(WizardForm);
+	FilenameLabel.Parent := WizardForm.FilenameLabel.Parent;
+	FilenameLabel.Left := WizardForm.FilenameLabel.Left;
+	FilenameLabel.Top := WizardForm.FilenameLabel.Top + ScaleY(13);
+	FilenameLabel.Width := WizardForm.FilenameLabel.Width + ScaleX(300);
+	FilenameLabel.Height := WizardForm.FilenameLabel.Height + ScaleY(12);
+	FilenameLabel.WordWrap := WizardForm.FilenameLabel.WordWrap;
+	FilenameLabel.AutoSize := True;
+	WizardForm.FilenameLabel.Visible := False;
+	
+	WizardForm.PageNameLabel.Width := 150;
+	WizardForm.PageDescriptionLabel.Width := 150;
+	
+	GetWindowsVersionEx(Version);
+
+	WizardForm.WelcomeLabel2.Caption := 'Hello. Thank you very much for your preference.'#13#13 +
+	'I hope you can make the most of the audio enhancements and features contained in this package.'#13#13 +
+	'This is a package dedicated to Realtek audio devices, whether they are internal, operating under the HDAUDIO enumerator, or USB-based devices.'#13#13 +
+	'Click Next to proceed with the wizard.';
+	
+	ComponentPage := CreateInputOptionPage(wpWelcome,
+	'Feature Selection Page',
+	'What package features will be installed?',
+	'Choose the features you want to install below and click Next.', False, True);
+	with ComponentPage.CheckListBox do
+	begin
+		ShowLines := False;
+		Flat := True;
+		WantTabs := True;
+		AddCheckBox('Install AAF Optimus Bus Driver (Supports Intel Smart Sound Technology)', '', 0, True, True, False, False, nil);
+		AddCheckBox('Install 5.1 Digital Audio Feature', '', 0, True, True, False, False, nil);
+		AddRadioButton('Dolby Digital', '', 1, True, True, nil);
+		AddRadioButton('DTS Interactive', '', 1, True, True, nil);
+		AddRadioButton('Realtek DDL/DTS Patched APO (Not Available in Realtek USB Audio Devices)', '', 1, True, True, nil);
+		AddCheckBox('Install DTS', '', 0, True, True, False, False, nil);
+		AddRadioButton('DTS Studio Sound', '', 1, True, True, nil);
+		AddRadioButton('DTS:X Ultra', '', 1, True, True, nil);
+		AddCheckBox('DTS Sound Unbound', '', 2, True, True, False, False, nil);
+		AddCheckBox('Install Creative', '', 0, True, True, False, False, nil);
+		AddRadioButton('Sound Blaster Connect', '', 1, True, True, nil);
+		AddRadioButton('Sound Blaster Connect 2', '', 1, True, True, nil);
+		AddRadioButton('Sound Blaster X-Fi MB5', '', 1, True, True, nil);
+		AddCheckBox('Choose License', '', 0, True, True, False, False, nil);
+		AddRadioButton('BlasterX 360°', '', 1, True, True, nil);
+		AddRadioButton('BlasterX 720°', '', 1, True, True, nil);
+		AddRadioButton('Blaster Cinema 5', '', 1, True, True, nil);
+		AddCheckBox('Install Dolby', '', 0, True, True, False, False, nil);
+		AddRadioButton('Dolby Atmos', '', 1, True, True, nil);
+		AddRadioButton('Dolby Atmos Speaker System', '', 1, True, True, nil);
+		AddRadioButton('Dolby Atmos Speaker System For Gaming', '', 1, True, True, nil);
+		AddCheckBox('Install A-Volute', '', 0, True, True, False, False, nil);
+		AddRadioButton('Nahimic 3', '', 1, True, True, nil);
+		AddRadioButton('Sonic Studio 3', '', 1, True, True, nil);
+		AddCheckBox('Install Realtek ASIO Controller', '', 0, True, True, False, False, nil);
+		OnClickCheck := @ComponentsClickCheck;
+	end;
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+	case CurPageID of
+		ComponentPage.ID: begin
+			UpdateBusComponent;
+			UpdateComponents; 
+		end;
+	end;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+// Begin Install Section
+	if CurStep = ssInstall then
+	begin
+		WizardForm.PageNameLabel.Caption := 'Installing Features';
+		WizardForm.PageDescriptionLabel.Caption := 'Extract Progress';
+		WizardForm.ProgressGauge.Style := npbstNormal;
+		WizardForm.ProgressGauge.Top := ScaleY(60);
+		FilenameLabel.Caption := 'Extracting Files and Resources...';
+	end;
+	if CurStep = ssPostInstall then
+	begin
+		WizardForm.PageNameLabel.Caption := 'Installing Features';
+		WizardForm.PageDescriptionLabel.Caption := 'Operation Progress';
+		WizardForm.ProgressGauge.Style := npbstMarquee;
+	// PowerShell Script to Remove Ghost Devices - All project credit and my special thanks to István Siroki (@istvans)	
+		FilenameLabel.Caption := 'Removing Related Ghost Devices'#13 + 'Part 1';
+		Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "SoftwareComponent" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "AudioEndpoint" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Copy software component INF files to uninstall directory to PnPUtil use
+		FilenameLabel.Caption := 'Copying INF Files...';
+		CreateDir(ExpandConstant('{commonpf64}\AAF\Uninstall\INF'));
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_DTSApo3x.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_DTSApo3x.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_DTSApo4x.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_DTSApo4x.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_AVoluteApo4.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_AVoluteApo4.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_RealtekAPO.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_RealtekAPO.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_RealtekAPO2.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_RealtekAPO2.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_CreativeSBC2.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_CreativeSBC2.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_CreativeSBC.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_CreativeSBC.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_CreativeSBX.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_CreativeSBX.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_AVoluteApo3.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_AVoluteApo3.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_Atmos.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_Atmos.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_AtmosSpeakerSystem.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_AtmosSpeakerSystem.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_AtmosSpeakerSystemForGaming.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_AtmosSpeakerSystemForGaming.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_DolbyDigital.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_DolbyDigital.inf'), False);
+		FileCopy(ExpandConstant('{#ExtensionsDir}\HDXExt_DTSInteractive.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\HDXExt_DTSInteractive.inf'), False);
+		FileCopy(ExpandConstant('{#VADDir}\NahimicBTLink\NahimicBTLink.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\NahimicBTLink.inf'), False);
+		FileCopy(ExpandConstant('{#VADDir}\NahimicMirroring\NahimicMirroring.inf'), ExpandConstant('{commonpf64}\AAF\Uninstall\INF\NahimicMirroring.inf'), False);
+		if ComponentPage.CheckListBox.ItemEnabled[0] and ComponentPage.CheckListBox.Checked[0] then
+		begin
+			FilenameLabel.Caption := 'Installing AAF Optimus Bus Driver...';
+			Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#BusDriverDir}\AAFBusDriver64.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end;
+		ExtractTemporaryFile('SetACL.exe');
+		FilenameLabel.Caption := 'Rebuilding Windows Audio Endpoints'#13 + 'Closing the Process: AudioDG.exe...';
+		Exec('powershell.exe', '{#PSCommand} Stop-Process -Name audiodg -Force', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		FilenameLabel.Caption := 'Rebuilding Windows Audio Endpoints'#13 + 'Stopping the Services: "AudioEndpointBuilder", "AudioSrv"...';
+		Exec('powershell.exe', '{#PSCommand} Stop-Service -Name "AudioEndpointBuilder" -Force', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		FilenameLabel.Caption := 'Rebuilding Windows Audio Endpoints'#13 +
+														 'Taking Ownership MMDevices key...';
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices" -ot reg -actn setowner -ownr "n:S-1-5-32-544"', '', SW_HIDE, ewNoWait, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices" -ot reg -actn ace -ace "n:S-1-5-32-544;p:full"', '', SW_HIDE, ewNoWait, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio" -ot reg -actn setowner -ownr "n:S-1-5-32-544"', '', SW_HIDE, ewNoWait, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio" -ot reg -actn ace -ace "n:S-1-5-32-544;p:full"', '', SW_HIDE, ewNoWait, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture" -ot reg -actn setowner -ownr "n:S-1-5-32-544"', '', SW_HIDE, ewNoWait, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture" -ot reg -actn ace -ace "n:S-1-5-32-544;p:full"', '', SW_HIDE, ewNoWait, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render" -ot reg -actn setowner -ownr "n:S-1-5-32-544"', '', SW_HIDE, ewNoWait, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), '-on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render" -ot reg -actn ace -ace "n:S-1-5-32-544;p:full"', '', SW_HIDE, ewNoWait, ResultCode);
+		RegDeleteKeyIncludingSubkeys(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture');
+		RegDeleteKeyIncludingSubkeys(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render');
+	// Take ownership and add permissions for DriverStore Folder and subfolders to the Administrators Group
+		FilenameLabel.Caption := 'Taking Ownership'#13 +
+														 'DriverStore Folder...';
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), ExpandConstant('-on "{win}\System32\DriverStore" -ot file -actn setowner -ownr "n:S-1-5-32-544"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), ExpandConstant('-on "{win}\System32\DriverStore" -ot file -actn ace -ace "n:S-1-5-32-544;p:full"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		FilenameLabel.Caption := 'Taking Ownership'#13 +
+														 'DriverStore SubFolders...';
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), ExpandConstant('-on "{win}\System32\DriverStore\*" -ot file -actn setowner -ownr "n:S-1-5-32-544"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		Exec(ExpandConstant('{tmp}\SetACL.exe'), ExpandConstant('-on "{win}\System32\DriverStore\*" -ot file -actn ace -ace "n:S-1-5-32-544;p:full"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	// Install Drivers
+		FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+														 'Installing Main Driver...';
+		Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\Resources.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#DriverDir}\HDX.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		with ComponentPage.CheckListBox do
+		begin
+			if ItemEnabled[6] and Checked[6] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing DTS APO3x Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_DTSApo3x.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\dtsoemapo3ss3dhsa.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[7] and Checked[7] then
+			begin	
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing DTS APO4x Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_DTSApo4x.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\dtsapo4xultrahsa.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;	
+			if ItemEnabled[22] and Checked[22] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Nahimic 3 Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_AVoluteApo4.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#VADDir}\NahimicBTLink\NahimicBTLink.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#VADDir}\NahimicMirroring\NahimicMirroring.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			try
+			for I := 0 to MediaQuery.Count-1 do
+			if WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*FUNC_01&VEN_10EC*') then
+			begin
+				if ItemEnabled[4] and Checked[4] then
+				begin
+					FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																	'Installing Realtek Extension...';
+					Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_RealtekAPO.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				end else
+					FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																	'Installing Realtek Extension...';
+					Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_RealtekAPO2.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			finally
+			end;
+			FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+															'Installing Realtek Extension...';
+			Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\RealtekHSA.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			if ItemEnabled[10] and Checked[10] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Creative Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_CreativeSBC.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\CreativeSBConnect.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[11] and Checked[11] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Creative Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_CreativeSBC2.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[12] and Checked[12] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Creative Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_CreativeSBX.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[23] and Checked[23] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Sonic Studio 3 Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_AVoluteApo3.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[18] and Checked[18] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Dolby Atmos Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_Atmos.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\dax3_swc_hsa.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[19] and Checked[19] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Dolby Atmos Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_AtmosSpeakerSystem.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\dax3_swc_hsa.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[20] and Checked[20] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Dolby Atmos Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_AtmosSpeakerSystemForGaming.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ResourcesDir}\dax3_swc_hsa.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[2] and Checked[2] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing Dolby Digital 5.1 Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_DolbyDigital.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			if ItemEnabled[3] and Checked[3] then
+			begin
+				FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 
+																'Installing DTS Interactive 5.1 Extension...';
+				Exec(ExpandConstant('{win}\System32\pnputil.exe'), ExpandConstant('/add-driver "{#ExtensionsDir}\HDXExt_DTSInteractive.inf" /install'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	    end;
+		end;
+	with ComponentPage.CheckListBox do
+	begin
+	// X-Fi MB5
+		if ItemEnabled[12] and Checked[12] then
+		begin
+			FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 'Configuring KGA License File for Sound Blaster X-Fi MB5...';
+			Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			//Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA30CF234.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA200FF2D.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTAE90C24A.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD1JXF23A.kga')); // Sound Blaster X-Fi MB2 - Sound Blaster Panel - DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD3SPO23G.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD5H2W3DK.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTH6K23AS7.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL34AF61R.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL42SW23M.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLA20RVB5.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD2JX234.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD14KLI5.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLE2C3BA1.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLI37CVX2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLLAS4HX2.kga')); // Sound BlasterX 360°                                                                                                                              
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLMN34SX2.kga')); // Sound Blaster Cinema 3                                                                                                                                  
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLNBK2HX2.kga')); // Sound BlasterX 720°
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLO3H65X2.kga')); 
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLP22SV21.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLPS4HTX2.kga')); // Sound Blaster Cinema 5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLS2SR4X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT02H0X2.kga'));   
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT9SJDX2.kga')); // Sound Blaster Cinema 2
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT11HL3X.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT21H1X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT46HL1X.kga'));                                                                                                                                 
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT47H9X2.kga')); // Sound Blaster Cinema
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT53HURX.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT72HL2X.kga'));                                                                                            
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT99HB0X.kga')); // Sound Blaster X-Fi MB2 - THX TruStudio Pro
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLTD2H3X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLUE8XYX2.kga'));
+			//DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLXS2Q3X2.kga')); // Sound Blaster X-Fi MB5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT78HSK12.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT92KD23N.kga'));
+		end;
+	// Select 360°	
+		if ItemEnabled[14] and Checked[14] then
+		begin
+			FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 'Configuring KGA License File for Sound BlasterX 360°...';
+			Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			//Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA30CF234.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA200FF2D.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTAE90C24A.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD1JXF23A.kga')); // Sound Blaster X-Fi MB2 - Sound Blaster Panel - DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD3SPO23G.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD5H2W3DK.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTH6K23AS7.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL34AF61R.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL42SW23M.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLA20RVB5.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD2JX234.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD14KLI5.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLE2C3BA1.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLI37CVX2.kga'));
+			//DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLLAS4HX2.kga')); // Sound BlasterX 360°                                                                                                                              
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLMN34SX2.kga')); // Sound Blaster Cinema 3                                                                                                                                  
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLNBK2HX2.kga')); // Sound BlasterX 720°
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLO3H65X2.kga')); 
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLP22SV21.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLPS4HTX2.kga')); // Sound Blaster Cinema 5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLS2SR4X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT02H0X2.kga'));   
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT9SJDX2.kga')); // Sound Blaster Cinema 2
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT11HL3X.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT21H1X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT46HL1X.kga'));                                                                                                                                 
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT47H9X2.kga')); // Sound Blaster Cinema
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT53HURX.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT72HL2X.kga'));                                                                                            
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT99HB0X.kga')); // Sound Blaster X-Fi MB2 - THX TruStudio Pro
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLTD2H3X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLUE8XYX2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLXS2Q3X2.kga')); // Sound Blaster X-Fi MB5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT78HSK12.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT92KD23N.kga'));
+		end;
+	// Select 720°
+		if ItemEnabled[15] and Checked[15] then
+		begin
+			FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 'Configuring KGA License File for Sound BlasterX 720°...';
+			Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			//Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA30CF234.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA200FF2D.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTAE90C24A.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD1JXF23A.kga')); // Sound Blaster X-Fi MB2 - Sound Blaster Panel - DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD3SPO23G.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD5H2W3DK.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTH6K23AS7.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL34AF61R.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL42SW23M.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLA20RVB5.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD2JX234.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD14KLI5.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLE2C3BA1.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLI37CVX2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLLAS4HX2.kga')); // Sound BlasterX 360°                                                                                                                               
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLMN34SX2.kga')); // Sound Blaster Cinema 3                                                                                                                                  
+			//DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLNBK2HX2.kga')); // Sound BlasterX 720°
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLO3H65X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLP22SV21.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLPS4HTX2.kga')); // Sound Blaster Cinema 5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLS2SR4X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT02H0X2.kga'));   
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT9SJDX2.kga')); // Sound Blaster Cinema 2
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT11HL3X.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT21H1X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT46HL1X.kga'));                                                                                                                                 
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT47H9X2.kga')); // Sound Blaster Cinema
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT53HURX.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT72HL2X.kga'));                                                                                            
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT99HB0X.kga')); // Sound Blaster X-Fi MB2 - THX TruStudio Pro
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLTD2H3X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLUE8XYX2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLXS2Q3X2.kga')); // Sound Blaster X-Fi MB5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT78HSK12.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT92KD23N.kga'));
+		end;
+	// Select Cinema 5
+		if ItemEnabled[16] and Checked[16] then
+		begin
+			FilenameLabel.Caption := '"AudioEndpointBuilder", "AudioSrv": These services will remain stopped until this step is completed:'#13 + 'Configuring KGA License File for Sound Blaster Cinema 5...';
+			Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			//Exec(ExpandConstant('{#KGADir}\SBXLicense.exe'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA30CF234.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTA200FF2D.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTAE90C24A.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD1JXF23A.kga')); // Sound Blaster X-Fi MB2 - Sound Blaster Panel - DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD3SPO23G.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTD5H2W3DK.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTH6K23AS7.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL34AF61R.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTL42SW23M.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLA20RVB5.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD2JX234.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLD14KLI5.kga')); // DTS Patcher
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLE2C3BA1.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLI37CVX2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLLAS4HX2.kga')); // Sound BlasterX 360°                                                                                                                               
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLMN34SX2.kga')); // Sound Blaster Cinema 3                                                                                                                                  
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLNBK2HX2.kga')); // Sound BlasterX 720°
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLO3H65X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLP22SV21.kga'));
+			//DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLPS4HTX2.kga')); // Sound Blaster Cinema 5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLS2SR4X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT02H0X2.kga'));   
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT9SJDX2.kga')); // Sound Blaster Cinema 2
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT11HL3X.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT21H1X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT46HL1X.kga'));                                                                                                                                 
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT47H9X2.kga')); // Sound Blaster Cinema
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT53HURX.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT72HL2X.kga'));                                                                                            
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLT99HB0X.kga')); // Sound Blaster X-Fi MB2 - THX TruStudio Pro
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLTD2H3X2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLUE8XYX2.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTLXS2Q3X2.kga')); // Sound Blaster X-Fi MB5
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT78HSK12.kga'));
+			DeleteFile(ExpandConstant('{sd}\ProgramData\Creative\SoftwareLock\CTT92KD23N.kga'));
+		end;
+	// Start Windows Audio Services
+		FilenameLabel.Caption := 'Rebuilding Windows Audio Endpoints'#13 + 'Initializing Services: "AudioEndpointBuilder", "AudioSrv"...';
+		Exec('powershell.exe', '{#PSCommand} Start-Service -Name "AudioSrv"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	// Initialize APO Services
+		FilenameLabel.Caption := 'Initializing APO Services'#13 + 'Realtek Service...';
+		Exec('powershell.exe', '{#PSCommand} Start-Service -Name "RtkAudioUniversalService"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		if ItemEnabled[10] and Checked[10] then
+		begin
+			FilenameLabel.Caption := 'Initializing APO Services'#13 + 'Creative Service...';
+			Exec('powershell.exe', '{#PSCommand} Start-Service -Name "UWPService"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end;
+		if ItemEnabled[21] and Checked[21] then
+		begin
+			FilenameLabel.Caption := 'Initializing APO Services'#13 + 'A-Volute Service...';
+			Exec('powershell.exe', '{#PSCommand} Start-Service -Name "NahimicService"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end;
+		if ItemEnabled[17] and Checked[17] then
+		begin
+			FilenameLabel.Caption := 'Initializing APO Services'#13 + 'Dolby Service...';
+			Exec('powershell.exe', '{#PSCommand} Start-Service -Name "DolbyDAXAPI"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end;
+		if ItemEnabled[6] and Checked[6] then
+		begin
+			FilenameLabel.Caption := 'Initializing APO Services'#13 + 'DTS APO3x Service...';
+			Exec('powershell.exe', '{#PSCommand} Start-Service -Name "DtsApo3Service"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end;
+		if ItemEnabled[7] and Checked[7] then
+		begin
+			FilenameLabel.Caption := 'Initializing APO Services'#13 + 'DTS APO4x Service...';
+			Exec('powershell.exe', '{#PSCommand} Start-Service -Name "DtsApo4Service"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end;
+	// Install Realtek Audio Console
+		FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+														 'Realtek Audio Console...';
+		Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\RealtekAudioControl.AppxBundle" -DependencyPath "{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	  if ResultCode <> 0 then
+			Log('Realtek Audio Console: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+	// Install Sound Blaster Connect
+		if ItemEnabled[10] and Checked[10] then
+		begin                  
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 '{#CTAppName}...';
+		Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\SoundBlasterConnect.AppxBundle" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.1.7_1.7.27413.0_x86__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.1.7_1.7.27422.0_x86__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x86__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			if ResultCode <> 0 then
+				Log('{#CTAppName}: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install Sound Blaster Connect 2
+		if ItemEnabled[11] and Checked[11] then
+		begin
+			FilenameLabel.Caption := 'Installing Desktop Apps'#13 +
+															 '{#CTAppName} 2...';
+			Exec(ExpandConstant('{#DesktopAppsDir}\CreativeSBConnect2Setup.exe'), '/VERYSILENT', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			if ResultCode <> 0 then
+				Log('{#CTAppName} 2: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install Sound Blaster X-Fi MB5
+			//if ItemEnabled[12] and Checked[12] then
+			//begin
+			//	FilenameLabel.Caption:='Installing Desktop Apps'#13 + 'Sound Blaster X-Fi MB5...';
+			//	Exec(ExpandConstant('{#DesktopAppsDir}\AAFSBXFiMB5Setup.exe'), '/NoAAFCertificates /VERYSILENT /NORESTART /FORCECLOSEAPPLICATIONS', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			//	if ResultCode <> 0 then
+			//		Log('Sound Blaster X-Fi MB5: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+			//end;
+	// Install Nahimic
+		if ItemEnabled[22] and Checked[22] and (Version.Major = 10) and (Version.Minor = 0) and (Version.Build >= 16299) then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'Nahimic 3...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\Nahimic.AppxBundle" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.2.2_2.2.29512.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.2.2_2.2.28604.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		  if ResultCode <> 0 then
+				Log('Sonic Studio 3: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;	
+	// Install Sonic Studio 3
+		if ItemEnabled[23] and Checked[23] and (Version.Major = 10) and (Version.Minor = 0) and (Version.Build >= 16299) then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'Sonic Studio 3...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\SonicStudio3.AppxBundle" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.2.1_2.1.27427.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.2.1_2.1.26424.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		  if ResultCode <> 0 then
+				Log('Sonic Studio 3: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install Dolby Atmos
+		if ItemEnabled[18] and Checked[18] and (Version.Major = 10) and (Version.Minor = 0) and (Version.Build >= 16299) then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'Dolby Atmos...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\DolbyAtmos.Appx" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.2.2_2.2.29512.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.2.2_2.2.28604.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		  if ResultCode <> 0 then
+				Log('Dolby Atmos: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install Dolby Atmos Speaker System
+		if ItemEnabled[19] and Checked[19] and (Version.Major = 10) and (Version.Minor = 0) and (Version.Build >= 16299) then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'Dolby Atmos Speaker System...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\DolbyAtmosSpeakerSystem.Appx" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.2.2_2.2.29512.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.2.2_2.2.28604.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		  if ResultCode <> 0 then
+				Log('Dolby Atmos Speaker System: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install Dolby Atmos Speaker System For Gaming
+		if ItemEnabled[20] and Checked[20] and (Version.Major = 10) and (Version.Minor = 0) and (Version.Build >= 16299) then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'Dolby Atmos Speaker System For Gaming...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\DolbyAtmosforGaming.Appx" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.2.2_2.2.29512.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.2.2_2.2.28604.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		  if ResultCode <> 0 then
+				Log('Dolby Atmos Speaker System For Gaming: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install DTS Studio Sound (Universal)
+		if ItemEnabled[6] and Checked[6] then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'DTS Studio Sound...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\DTSStudioSound.Appx" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.1.3_1.3.24211.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.1.4_1.4.24201.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	    if ResultCode <> 0 then
+				Log('DTS Studio Sound: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install DTS:X Ultra
+		if ItemEnabled[7] and Checked[7] then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'DTS:X Ultra...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppPackage -Path "{#UWPAppsDir}\DTSXUltra.AppxBundle" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.1.7_1.7.27413.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.1.7_1.7.27422.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	    if ResultCode <> 0 then
+				Log('DTS:X Ultra: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// Install DTS Sound Unbound
+		if ItemEnabled[8] and Checked[8] and (Version.Major = 10) and (Version.Minor = 0) and (Version.Build >= 18362) then
+		begin
+			FilenameLabel.Caption := 'Installing UWP Apps with Dependencies'#13 +
+															 'DTS Sound Unbound...';
+			Exec('powershell.exe', ExpandConstant('{#PSCommand} Add-AppxPackage -Path "{#UWPAppsDir}\DTSSoundUnbound.msix" -DependencyPath "{#UWPDependenciesDir}\Microsoft.NET.Native.Framework.2.2_2.2.29512.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.NET.Native.Runtime.2.2_2.2.28604.0_x64__8wekyb3d8bbwe.Appx","{#UWPDependenciesDir}\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx" -ForceApplicationShutdown'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		  if ResultCode <> 0 then
+				Log('DTS Sound Unbound: Installation Failed with Error Code: ' + IntToStr(ResultCode));
+		end;
+	// PowerShell Script to Remove Ghost Devices - All project credit and my special thanks to István Siroki (@istvans)	
+		FilenameLabel.Caption := 'Removing Related Ghost Devices'#13 + 'Part 2';
+		Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "MEDIA" -filterByFriendlyName "Microsoft" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "AudioEndpoint" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "SoftwareComponent" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		//Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "MEDIA" -narrowByFriendlyName "AAF" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		//Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "MEDIA" -narrowByFriendlyName "Realtek" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		//Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "MEDIA" -narrowByFriendlyName "High Definition" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		//Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "AudioEndpoint" -narrowByFriendlyName "AAF" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		//Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "AudioEndpoint" -narrowByFriendlyName "Realtek" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+		//Exec('powershell.exe', ExpandConstant('-ExecutionPolicy Bypass -File "{#ScriptDir}\removeGhosts.ps1" -narrowByClass "AudioEndpoint" -narrowByFriendlyName "High Definition" -Force'), '', SW_HIDE, ewNoWait, ResultCode);
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	end;
+end;
+// End Install Section
+	if CurStep = ssDone then
+	begin
+		RegDeleteValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F132AF7F-7BCA-4EDE-8A7C-958108FE7DBD}_is1', 'EstimatedSize');
+		RegDeleteValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F132AF7F-7BCA-4EDE-8A7C-958108FE7DBD}_is1', 'InstallLocation');
+		RegDeleteValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F132AF7F-7BCA-4EDE-8A7C-958108FE7DBD}_is1', 'Inno Setup: App Path');
+		try
+		for I := 0 to MediaQuery.Count-1 do
+		if WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*FUNC_01&VEN_10EC*') then
+		begin
+			GetVersionNumbersString(ExpandConstant('{win}\System32\drivers\RTKVHD64.sys'), InstalledDriverVersion);
+			RegWriteStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F132AF7F-7BCA-4EDE-8A7C-958108FE7DBD}_is1', 'DisplayVersion', InstalledDriverVersion);
+		end;
+		finally
+		end;
+		try
+		for I := 0 to MediaQuery.Count-1 do
+		if (WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1915*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1916*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1917*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1918*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1919*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1984*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1996*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1998*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1999*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_19AC*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A20*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A27*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A52*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A53*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A5C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_9D09*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4008*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4015*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4016*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4802*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4803*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4021*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_480C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4825*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_482F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4833*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_7810*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_14A3*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4002*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4003*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4005*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4010*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4011*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4024*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4040*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_1570*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_04C5&PID_1571*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_103C&PID_830A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4825*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4837*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4040*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_045E&PID_0929*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4008*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_400E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_4016*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_402D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0BDA&PID_402E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A001*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A002*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00E*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A00F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A010*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A011*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A012*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A014*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_F000*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_0D64*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_543D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_8AF7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_80A5*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_5F5D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_6CC9*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A228*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1D34*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_E06C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A47C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_BB5A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_419C*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_151F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A073*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1BCA*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_124B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_95BB*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_005A*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_1FEB*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_B202*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_4039*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_C197*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_88F8*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_6730*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_9F3F*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_82C7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_7B3D*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A7C2*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_3130*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_36E7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0B05&PID_1A16*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_4240*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_A74B*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0DB0&PID_D6E7*') or
+		WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*VID_0414&PID_A014*')) then
+		begin
+			GetVersionNumbersString(ExpandConstant('{win}\System32\drivers\RtUsbA64.sys'), InstalledUSBDriverVersion);
+			RegWriteStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F132AF7F-7BCA-4EDE-8A7C-958108FE7DBD}_is1', 'DisplayVersion', InstalledUSBDriverVersion);
+		end;
+		finally
+		end;
+		if MsgBox('Your computer must be restarted to complete the driver package installation.'#13 + 'Do you want to restart your PC now ?', mbConfirmation, MB_YESNO) = IDYES then
+		begin
+			Exec(ExpandConstant('{win}\System32\shutdown.exe'), '/r /f /t 0 /d p:1:2', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+		end else
+			Exit;
+	end;
+end;
+
+procedure DeinitializeSetup;
+begin
+  UnLoadAAFStyles;
+	DelTree(ExpandConstant('{#DefaultDir}\*'), False, True, True);
+	DelTree(ExpandConstant('{#DefaultDir}'), True, True, True);
+	DelTree(ExpandConstant('{tmp}\*'), False, True, True);
+	DelTree(ExpandConstant('{tmp}'), True, True, True);
+end;
+
+function InitializeUninstall: Boolean;
+begin
+	WbemLocator := CreateOleObject('WbemScripting.SWbemLocator');
+	WbemServices := WbemLocator.ConnectServer('.', 'root\CIMV2');
+	LoadAAFStyle_UnInstall(ExpandConstant('{#AAFStyleSkinFilepath}\Uninst.vsf'));
+	MediaQuery := WbemServices.ExecQuery(MEDIA);
+	UninstQuery := WbemServices.ExecQuery(AAF);
+	Result := True;
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+	case CurUninstallStep of
+		usUninstall: begin
+			try
+			for I:=0 to UninstQuery.Count-1 do
+				if not (WildCardMatch(UninstQuery.ItemIndex(I).DeviceName, 'AAF Optimus*') and WildCardMatch(UninstQuery.ItemIndex(I).DriverVersion, '10.11.2023.1*')) then
+				begin
+					Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/remove-device /DeviceID ' + UninstQuery.ItemIndex(I).HardwareID + ' /subtree', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+					Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/delete-driver ' + UninstQuery.ItemIndex(I).InfName + ' /uninstall /force', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				end;
+			finally
+			end;
+			try
+			for I:=0 to UninstQuery.Count-1 do
+				if (WildCardMatch(UninstQuery.ItemIndex(I).DeviceName, 'AAF Optimus*') and WildCardMatch(UninstQuery.ItemIndex(I).DriverVersion, '10.11.2023.1*')) then
+				begin
+					if MsgBox('Do you want to remove "'+ UninstQuery.ItemIndex(I).DeviceName +'" driver from your system?', mbConfirmation, MB_YESNO) = IDYES then
+					begin
+						Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/remove-device /DeviceID ' + UninstQuery.ItemIndex(I).HardwareID, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+						Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/delete-driver ' + UninstQuery.ItemIndex(I).InfName + ' /uninstall /force', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+					end;
+				end;
+			finally
+			end;
+			Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/scan-devices', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			try
+			for I:=0 to MediaQuery.Count-1 do
+				if WildCardMatch(MediaQuery.ItemIndex(I).HardwareID, '*FUNC_01&VEN_10EC*') then
+				begin
+					Exec(ExpandConstant('{win}\System32\pnputil.exe'), '/remove-device "' + MediaQuery.ItemIndex(I).DeviceID + '" /subtree', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+				end;
+			finally
+			end;
+		end;
+		usPostUninstall: begin
+			RegDeleteKeyIncludingSubkeys(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F132AF7F-7BCA-4EDE-8A7C-958108FE7DBD}_is1');
+		end;
+	end;
+end;
+
+procedure InitializeUninstallProgressForm;
+begin
+	UninstallProgressForm.WizardSmallBitmapImage.Hide;
+	UninstallProgressForm.ProgressBar.Style := npbstMarquee;
+end;
+
+procedure DeinitializeUninstall;
+begin
+	UnLoadAAFStyles_UnInstall;
+end; 

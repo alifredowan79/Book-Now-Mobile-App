@@ -1,0 +1,21 @@
+[
+    {
+      "imagePath": "https://images.unsplash.com/photo-1551918120-9739cb430c6f",
+      "titleTxt": "Ocean View Hotel",
+      "subTxt": "Cox's Bazar, Bangladesh",
+      "dist": 2.0,
+      "reviews": 120,
+      "rating": 4.5,
+      "perNight": 95
+    },
+    {
+      "imagePath": "https://images.unsplash.com/photo-1582719478250-00c1a43eb6dc",
+      "titleTxt": "Mountain Hill Inn",
+      "subTxt": "Bandarban, Bangladesh",
+      "dist": 3.7,
+      "reviews": 89,
+      "rating": 4.2,
+      "perNight": 120
+    }
+  ]
+  

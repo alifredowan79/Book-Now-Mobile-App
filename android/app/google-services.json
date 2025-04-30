@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "686729302252",
+    "project_id": "book-now-85b88",
+    "storage_bucket": "book-now-85b88.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686729302252:android:428e120cf67e1d33e795c9",
+        "android_client_info": {
+          "package_name": "com.example.book_now"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoUwe0_10kY0THTvuPeBYvB4TJCbhTGjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
