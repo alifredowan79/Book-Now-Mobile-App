@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
+import 'hotel_detail_screen.dart';
 
 class HotelListView extends StatelessWidget {
   final dynamic hotelData;
   final AnimationController animationController;
   final Animation<double> animation;
-  final VoidCallback callback;
 
   const HotelListView({
-    Key? key,
+    super.key,
     required this.hotelData,
     required this.animationController,
     required this.animation,
-    required this.callback,
-  }) : super(key: key);
+  });
+
+
+
 
   @override
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: animation,
       child: InkWell(
-        onTap: callback,
+        splashColor: Colors.transparent,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HotelDetailScreen(hotelData: hotelData),
+            ),
+          );
+        },
         child: hotelCard(hotelData),
       ),
     );
   }
+
 
   Widget hotelCard(dynamic hotelData) {
     return Container(
@@ -71,7 +82,7 @@ class HotelListView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "\$${hotelData.perNight ?? 0}",
+                      "\৳${hotelData.perNight ?? 0}",
                       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],

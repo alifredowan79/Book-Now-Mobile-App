@@ -127,7 +127,6 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
                               );
                               animationController?.forward();
                               return HotelListView(
-                                callback: () {},
                                 hotelData: hotelList[index],
                                 animation: animation,
                                 animationController: animationController!,
@@ -191,7 +190,6 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
                       animationController?.forward();
 
                       return HotelListView(
-                        callback: () {},
                         hotelData: hotelList[index],
                         animation: animation,
                         animationController: animationController!,
@@ -222,7 +220,6 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
       );
       hotelListViews.add(
         HotelListView(
-          callback: () {},
           hotelData: hotelList[i],
           animation: animation,
           animationController: animationController!,
