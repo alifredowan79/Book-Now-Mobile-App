@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.1.0
+  google_maps_flutter: ^2.5.0
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.1.0
   flutter_rating_bar: ^4.0.1
@@ -36,6 +37,7 @@ flutter:
         - assets/images/
         - assets/
         - assets/hotel/
+        - assets/logo.png
         - assets/introduction_animation/
         - assets/data/hotels.json
 
