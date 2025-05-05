@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'booking_confirmation_screen.dart';
 
 class HotelDetailScreen extends StatefulWidget {
   final dynamic hotelData;
@@ -123,8 +124,11 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
             ),
           ),
           onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Booking Coming Soon!')),
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BookingConfirmationScreen(),
+              ),
             );
           },
           child: const Text(

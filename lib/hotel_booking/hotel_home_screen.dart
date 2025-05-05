@@ -40,10 +40,10 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
       setState(() {
         hotelList = fetchedHotels;
       });
-      return true; // ✅ Success
+      return true;
     } catch (e) {
       print('Error fetching hotel data: $e');
-      return false; // ✅ Failure
+      return false;
     }
   }
 
