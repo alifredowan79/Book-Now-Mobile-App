@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'toast.dart';
 import 'signup_page.dart';
 import 'navigation_home_screen.dart';
 
@@ -10,6 +12,26 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController(text: 'bubt_sdp_3@gmail.com');
+  final _passwordController = TextEditingController(text: 'bubtsdp3');
+
+  Future<void> _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      showToast(message: "Login successful!");
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => NavigationHomeScreen()),
+      );
+    } on FirebaseAuthException catch (e) {
+      showToast(message: e.message ?? "Login failed");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -22,9 +44,8 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final email = TextFormField(
+      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      initialValue: 'bubt_sdp_3@gmail.com',
       decoration: InputDecoration(
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -33,8 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final password = TextFormField(
-      autofocus: false,
-      initialValue: 'bubtsdp3',
+      controller: _passwordController,
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -44,30 +64,25 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           backgroundColor: Colors.lightBlueAccent,
         ),
-        onPressed: () {
-          // On successful login
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => NavigationHomeScreen()),
-          );
-        },
-        child: Text('Log In', style: TextStyle(color: Colors.white)),
+        onPressed: _login,
+        child: const Text('Log In', style: TextStyle(color: Colors.white)),
       ),
     );
 
     final forgotLabel = TextButton(
       onPressed: () {
-        // Add your forgot password logic
+        // TODO: Add forgot password functionality
       },
-      child: Text(
+      child: const Text(
         'Forgot password?',
         style: TextStyle(color: Colors.black54),
       ),
@@ -77,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         Navigator.of(context).pushNamed(SignUpPage.tag);
       },
-      child: Text(
+      child: const Text(
         "Don't have an account? Sign Up",
         style: TextStyle(color: Colors.black54),
       ),
@@ -88,14 +103,14 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: ListView(
           shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
             logo,
-            SizedBox(height: 48.0),
+            const SizedBox(height: 48.0),
             email,
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             password,
-            SizedBox(height: 24.0),
+            const SizedBox(height: 24.0),
             loginButton,
             forgotLabel,
             signUpLabel,
